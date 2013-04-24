@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title></title>
+    <script type="text/javascript" src="https://github.com/mbostock/d3/raw/v1.4.0/d3.js"></script>
+    <script type="text/javascript" src="underscore.js"></script>
+
+    <style type="text/css">
+      body {
+        background: #000022;
+      }
+    </style>
+
+  </head>
+  <body>
+    <script type="text/javascript">
+
+      // 0D66F9D05CD820038BB0170707B5FFDE
+
+      var w = 1260,
+          h = 800,
+          circle_r = 100
+          step = Math.sqrt(Math.pow(circle_r, 1.70) - Math.pow((circle_r / 3.0), 1.0));
+
+      var svg = d3.select("body")
+        .append("svg:svg")
+          .attr("width", w)
+          .attr("height", h)
+
+      drawCircles();
+
+      function drawCircles() {
+        var ox = -120;
+        var oy = -120;
+        var circ = circle_r * 2;
+        for(var x = ox; x < w; x += 2*step) {
+          for(y = oy; y < h; y += (circle_r * 2)) {
+
+            drawCircle(x, y);
+
+            drawLine(x, y - circle_r, x, y + circle_r); // vertical
+            drawLine(x - circle_r, y, x + circle_r, y); // horiz
+
+            drawLine(x, y, x + circle_r, y + circle_r); // top l, bottom r
+            drawLine(x, y, x - circle_r, y + circle_r); // top r, bottom l
+
+            // drawLine(x - circle_r, y - circle_r, x + circle_r, y + circ);
+            // drawLine(x - circ, y - circ, x, y + circ);
+
+          }
+          oy -= circle_r;
+        }
+      }
+
+      function drawCircle(x, y) {
+        svg.append("svg:circle")
+          .attr("fill", '#'+(Math.floor(Math.random()*16777215) + 8000).toString(16))
+          .attr("opacity", Math.random())
+          .attr("stroke", "#ccc")
+          .attr("stroke-opacity", 0.5)
+          .attr("cx", x)
+          .attr("cy", y)
+          .attr("r", circle_r)
+      }
+
+      function drawLine(start_x, start_y, end_x, end_y) {
+        svg.append("svg:line")
+          .attr("stroke", '#fff')
+          .attr("x1", start_x)
+          .attr("y1", start_y)
+          .attr("x2", end_x)
+          .attr("y2", end_y)
+          .attr("opacity", Math.random() - 0.15)
+      }
+
+    </script>
+  </body>
+</html>
