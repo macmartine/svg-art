@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://github.com/mbostock/d3/raw/v1.4.0/d3.js"></script>
+    <script type="text/javascript" src="underscore.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+      var bg = "#efefef";
+      var solid = "394D59";
+
+      var w = 800,
+          h = 800;
+
+      var xCenter = w / 2,
+          yCenter = h / 2
+
+      var svg = d3.select("body")
+        .append("svg:svg")
+          .attr("width", w)
+          .attr("height", h)
+      svg.append("svg:rect")
+          .attr("width", "100%")
+          .attr("height", "100%")
+          .attr("fill", bg)
+
+      drawCircles();
+
+      function drawCircles() {
+
+        var sc = 150;
+        for(var i = 0; i < sc; i++) {
+          var x = xCenter + smallCircleRange();
+          var y = yCenter + smallCircleRange();
+          drawCircle(x, y, smallCircleRadius());
+        }
+
+        var lc = 40;
+        for(var i = 0; i < lc; i++) {
+          var x = xCenter + largeCircleRange();
+          var y = yCenter + largeCircleRange();
+          drawCircle(x, y, largeCircleRadius());
+        }
+
+        var uc = 35;
+        for(var i = 0; i < uc; i++) {
+          var x = xCenter + unfilledCircleRange();
+          var y = yCenter + unfilledCircleRange();
+          drawUnfilledCircle(x, y, unfilledCircleRadius());
+        }
+      }
+
+      function smallCircleRange () {
+        return getRandomInt(-300, 300);
+      }
+
+      function smallCircleRadius () {
+        return getRandomInt(1, 8);
+      }
+
+      function largeCircleRange () {
+        return getRandomInt(-150, 150);
+      }
+
+      function largeCircleRadius () {
+        return getRandomInt(10, 50);
+      }
+
+      function unfilledCircleRange () {
+        return getRandomInt(-280, 280);
+      }
+
+      function unfilledCircleRadius () {
+        return getRandomInt(2, 70);
+      }
+
+      function drawCircle(x, y, r) {
+        svg.append("svg:circle")
+          .attr("fill", '#'+solid)
+          .attr("opacity", getRandom(0.2, 0.8) )
+          .attr("cx", x)
+          .attr("cy", y)
+          .attr("r", r)
+      }
+
+      function drawUnfilledCircle(x, y, r) {
+        svg.append("svg:circle")
+          .attr("stroke", '#'+solid)
+          .attr("opacity", getRandom(0.1, 0.6) )
+          .attr("fill", 'none')
+          .attr("cx", x)
+          .attr("cy", y)
+          .attr("r", r)
+      }
+
+      function getRandom (min, max) {
+          return Math.random() * (max - min) + min;
+      }
+
+      function getRandomInt (min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+    </script>
+  </body>
+</html>
